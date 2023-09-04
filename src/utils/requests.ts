@@ -47,22 +47,19 @@ export const getTransactionsByEmployee = ({ employeeId }: RequestByEmployeeParam
   return data.transactions.filter((transaction) => transaction.employee.id === employeeId)
 }
 
-export const setTransactionApproval = ({ transactionId, value }: SetTransactionApprovalParams):{ employees: Employee[]; transactions: Transaction[] }  => {
-  
-  
-  console.log('====================================');
-  console.log("Data before updating",data," Value is ",value);
-  console.log('====================================');
-  
-  data.transactions = data.transactions.filter(
-    (currentTransaction) => currentTransaction.id === transactionId ?currentTransaction.approved=value:currentTransaction.approved
-  )
-  console.log('====================================');
-  console.log("Data After updating",data);
-  console.log('====================================');
-  // if (!transaction) {
-  //   throw new Error("Invalid transaction to approve")
-  // }
-  return data;
-  // transaction.approved = value
-}
+export const setTransactionApproval = ({ transactionId, value }: SetTransactionApprovalParams): void => {
+  // Find the transaction with the given transactionId
+  const transaction = data.transactions.find(
+    (currentTransaction) => currentTransaction.id === transactionId
+  );
+  // data.transactions = data.transactions.filter(
+  //   (currentTransaction) => currentTransaction.id === transactionId ?currentTransaction.approved=value:currentTransaction.approved
+  // )
+  // If no transaction is found with the provided transactionId, throw a custom error
+  if (!transaction) {
+    throw new Error("Transaction not found");
+  }
+
+  // Set the approval status of the transaction to the provided value
+  transaction.approved = value;
+};

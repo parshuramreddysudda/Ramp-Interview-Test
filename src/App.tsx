@@ -67,7 +67,7 @@ export function App() {
               // await loadAllTransactions()
               return
             }
-            if(newValue.id === "All") 
+            if(newValue.id === "") 
               await loadAllTransactions()
             else
               await loadTransactionsByEmployee(newValue.id)
